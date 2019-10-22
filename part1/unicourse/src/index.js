@@ -12,11 +12,11 @@ const App = () => {
         },
         {
             name: 'Using props to pass data',
-            exercises: 10
+            exercises: 20
         },
         {
             name: 'State of a component',
-            exercises: 10
+            exercises: 30
         }
     ]
 
@@ -36,7 +36,6 @@ const Header = (props) => {
 }
 
 const Content = (props) => {
-    console.log(props)
     return (
         <div>
             <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
@@ -57,8 +56,11 @@ const Part = (props) => {
 }
 
 const Total = (props) => {
+    const exercisesTotal = props.parts.reduce((currentT, part) => {
+        return part.exercises + currentT
+    }, 0)
     return (
-        <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
+        <p>Number of exercises {exercisesTotal}</p>
     )
 
 }
