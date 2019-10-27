@@ -29,11 +29,8 @@ const App = () => {
     )
 }
 
-const Header = (props) => {
-    return (
-        <h1>{props.course}</h1>
-    )
-}
+const Header = ({course}) =>  <h1>{course}</h1>
+ 
 
 const Content = (props) => {
     return (
@@ -46,14 +43,7 @@ const Content = (props) => {
 
 }
 
-const Part = (props) => {
-    console.log(props)
-    return (
-        <p>
-            {props.part}  {props.exercises}
-        </p>
-    )
-}
+const Part = ({part, exercises}) => <p> {part} {exercises} </p>
 
 const Total = (props) => {
     const exercisesTotal = props.parts.reduce((currentT, part) => {
