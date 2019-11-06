@@ -4,6 +4,31 @@ import ReactDOM from 'react-dom';
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
+const Statistics = (props) => {
+    const [good, neutral, ...bad] = props.statistics
+    const feedbackTotal = props.statistics.reduce((currentT, statistics) => {
+        return statistics + currentT
+    }, 0)
+
+    if (feedbackTotal === 0)  {
+        return (
+            <div>
+                No feedback given
+            </div>
+        )
+    }
+    return (
+        <p>
+            {good} {neutral} {bad} {feedbackTotal}
+        </p>
+    )
+
+}
+
+const Statistic = (props) => {
+
+}
+
 const App = () => {
 
     const [good, setGood] = useState(0)
@@ -14,19 +39,22 @@ const App = () => {
     const handleNeutralClick = () => setNeural(neutral + 1)
     const handleBadClick = () => setBad(bad + 1)
 
-    const all = good + neutral + bad
-    const average = () => {
-        if (all === 0) return 0
-        return (
-            (good * 1 + neutral * 0 + bad * -1) / all
-        )
-    }
-    const positive = () => {
-        if (all === 0) return 0
-        return (
-            good / all * 100
-        )
-    }
+    const statistics = [good, neutral, bad]
+
+
+    // const all = good + neutral + bad
+    // const average = () => {
+    //     if (all === 0) return 0
+    //     return (
+    //         (good * 1 + neutral * 0 + bad * -1) / all
+    //     )
+    // }
+    // const positive = () => {
+    //     if (all === 0) return 0
+    //     return (
+    //         good / all * 100
+    //     )
+    // }
 
     return (
         <div>
@@ -35,7 +63,9 @@ const App = () => {
             <Button onClick={handleNeutralClick} text='neutral' />
             <Button onClick={handleBadClick} text='bad' />
             <h1>Statistic</h1>
-            <table>
+            <Statistics statistics={statistics} />
+
+            {/* <table>
                 <tbody>
                     <tr>
                         <td>good</td>
@@ -62,7 +92,7 @@ const App = () => {
                         <td>{positive()} %</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
         </div>
     )
 }
