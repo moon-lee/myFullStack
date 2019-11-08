@@ -5,12 +5,17 @@ import ReactDOM from 'react-dom';
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 const Statistics = (props) => {
-    const [good, neutral, ...bad] = props.statistics
+    const [good, neutral, bad] = props.statistics
     const feedbackTotal = props.statistics.reduce((currentT, statistics) => {
         return statistics + currentT
     }, 0)
 
-    if (feedbackTotal === 0)  {
+    const all = good + neutral + bad
+    const average =  (good * 1 + neutral * 0 + bad * -1) / all
+    const positive =  good / all * 100 + ' %'
+
+
+    if (feedbackTotal === 0) {
         return (
             <div>
                 No feedback given
@@ -18,14 +23,27 @@ const Statistics = (props) => {
         )
     }
     return (
-        <p>
-            {good} {neutral} {bad} {feedbackTotal}
-        </p>
+        <table>
+            <tbody>
+                <Statistic text='good' value={good} />
+                <Statistic text='neutral' value={neutral} />
+                <Statistic text='bad' value={bad} />
+                <Statistic text='all' value={all} />
+                <Statistic text='average' value={average} />
+                <Statistic text='positive' value={positive} />
+            </tbody>
+        </table>
     )
 
 }
 
 const Statistic = (props) => {
+    return (
+        <tr>
+            <td>{props.text}</td>
+            <td>{props.value}</td>
+        </tr>
+    )
 
 }
 
