@@ -5,6 +5,10 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 const Votes = ({ votes, selected }) => <p>has {votes[selected]} votes</p>
 
+const Ancedote = ({anecdote}) => <p>{anecdote}</p>
+
+const Headings = ({headingTitle}) => <h1>{headingTitle}</h1>
+  
 
 const App = (props) => {
     const [selected, setSelected] = useState(0)
@@ -27,13 +31,13 @@ const App = (props) => {
 
     return (
         <div>
-            <h1>Ancedote of the day</h1>
-            <p>{props.anecdotes[selected]}</p>
+            <Headings headingTitle = {'Ancedote of the day'} />
+            <Ancedote anecdote = {props.anecdotes[selected]} />
             <Votes votes={votes} selected={selected} />
             <Button onClick={haveVoted} text='vote' />
             <Button onClick={getRandomSelected} text='next ancedote' />
-            <h1>Ancedote with most votes</h1>
-            <p>{props.anecdotes[getMostvoted]}</p>
+            <Headings headingTitle = {'Ancedote with most votes'} />
+            <Ancedote anecdote = {props.anecdotes[getMostvoted]} />
             <Votes votes={votes} selected={getMostvoted} />
 
         </div>
