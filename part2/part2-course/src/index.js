@@ -3,35 +3,74 @@ import ReactDOM from 'react-dom';
 
 
 const App = () => {
-    const course = {
-        name: 'Half Stack application development',
-        parts: [
-            {
-                name: 'Fundamentals of React',
-                exercises: 10,
-                id: 1
-            },
-            {
-                name: 'Using props to pass data',
-                exercises: 7,
-                id: 2
-            },
-            {
-                name: 'State of a component',
-                exercises: 17,
-                id: 3
-            }
-        ]
-    
-    } 
+    const courses = [
+        {
+            name: 'Half Stack application development',
+            id: 1,
+            parts: [
+                {
+                    name: 'Fundamentals of React',
+                    exercises: 10,
+                    id: 1
+                },
+                {
+                    name: 'Using props to pass data',
+                    exercises: 7,
+                    id: 2
+                },
+                {
+                    name: 'State of a component',
+                    exercises: 14,
+                    id: 3
+                },
+                {
+                    name: 'Redux',
+                    exercises: 11,
+                    id: 4
+                }
+            ]
+
+        },
+        {
+            name: 'Node.js',
+            id: 2,
+            parts: [
+                {
+                    name: 'Routing',
+                    exercises: 3,
+                    id: 1
+                },
+                {
+                    name: 'Middlewares',
+                    exercises: 7,
+                    id: 2
+                }
+            ]
+
+        }
+    ]
     return (
         <>
-            <Course course={course} />
+            <Courses courses={courses} />
         </>
     )
 }
 
-const Course = ({course}) => {
+const Courses = ({ courses }) => {
+    const rows = () => courses.map(course =>
+        <Course
+            key={course.id}
+            course={course}
+        />
+    )
+    return (
+        <div>
+            {rows()}
+        </div>
+    )
+}
+
+const Course = ({ course }) => {
     return (
         <>
             <Header name={course.name} />
@@ -41,14 +80,14 @@ const Course = ({course}) => {
     )
 }
 
-const Header = ({name}) =>  <h1>{name}</h1>
- 
+const Header = ({ name }) => <h1>{name}</h1>
 
-const Content = ({parts}) => {
-    const rows = () => parts.map(part=> 
-        <Part 
+
+const Content = ({ parts }) => {
+    const rows = () => parts.map(part =>
+        <Part
             key={part.id}
-            part={part} 
+            part={part}
         />
     )
 
@@ -60,14 +99,14 @@ const Content = ({parts}) => {
 
 }
 
-const Part = ({part}) => <p> {part.name} {part.exercises} </p>
+const Part = ({ part }) => <p> {part.name} {part.exercises} </p>
 
-const Total = ({parts}) => {
-    const exercisesTotal = parts.reduce((currentT, part) => {
+const Total = ({ parts }) => {
+    const total = parts.reduce((currentT, part) => {
         return part.exercises + currentT
     }, 0)
     return (
-        <p>Number of exercises {exercisesTotal}</p>
+        <b>total of {total} exercises</b>
     )
 
 }
