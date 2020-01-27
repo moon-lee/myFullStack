@@ -19,58 +19,49 @@ const App = () => {
       number: '39-23-6423122'
     }
   ])
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
+
   const [nameFilter, setNameFilter] = useState('')
+
+  const [newInputValue, setNewInputValue] = useState({newName:'', newNumber:''})
 
 
   const addNew = (e) => {
     e.preventDefault()
-    const isExist = persons.map(person => person.name).includes(newName)
+    const isExist = persons.map(person => person.name).includes(newInputValue.newName)
 
     if (!isExist) {
       const nameObject = {
-        name: newName,
-        number: newNumber
+        name: newInputValue.newName,
+        number: newInputValue.newNumber
       }
       setPersons(persons.concat(nameObject))
     } else {
-      alert(`${newName} is already added to phonebook`)
+      alert(`${newInputValue.newName} is already added to phonebook`)
     }
-    setNewName('')
-    setNewNumber('')
+    setNewInputValue({newName:'', newNumber:''})
   }
 
-  const handleNameChange = (e) => {
-    setNewName(e.target.value)
-  }
-
-  const handleNumberChange = (e) => {
-    setNewNumber(e.target.value)
-  }
   const handleFilterChange = (e) => {
     setNameFilter(e.target.value)
   }
 
+  const handleOnChange = (e) => {
+    const value = e.target.value
+    const name = e.target.name
+    setNewInputValue({
+      ...newInputValue,
+      [name]: value
+    })
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter value={nameFilter} onChange={handleFilterChange} />
+        <Filter value={nameFilter} onChange={handleFilterChange} />
       <h3>Add a new person</h3>
-      <form onSubmit={addNew}>
-        <div>
-          name: <input type="text" value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input type="text" value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+        <PersonForm onSubmit={addNew} value={newInputValue} onChange={handleOnChange} />
       <h3>Numbers</h3>
-      <Persons persons={persons} filterName={nameFilter} />
+        <Persons persons={persons} filterName={nameFilter} />
     </div>
   )
 }
@@ -97,12 +88,26 @@ const Persons = ({ persons, filterName }) => {
 const Filter = ({ value, onChange }) => {
   return (
     <div>
-      filter shown with <Input value={value} onChange={onChange} />
+      filter shown with <input type="text" value={value} onChange={onChange} />
     </div>
   )
 }
 
-const Input = ({ value, onChange }) => (<input type="text" value={value} onChange={onChange} />)
+const PersonForm = ({onSubmit, value, onChange}) => {
+  return (
+    <form onSubmit={onSubmit}>
+    <div>
+      name: <input type="text" name='newName' value={value.newName} onChange={onChange} />
+    </div>
+    <div>
+      number: <input type="text" name="newNumber" value={value.newNumber} onChange={onChange} />
+    </div>
+    <div>
+      <button type="submit">add</button>
+    </div>
+  </form>
+  )
+}
 
 
 export default App
