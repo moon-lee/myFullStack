@@ -20,9 +20,7 @@ const App = () => {
     }
   ])
 
-  const [nameFilter, setNameFilter] = useState('')
-
-  const [newInputValue, setNewInputValue] = useState({newName:'', newNumber:''})
+  const [newInputValue, setNewInputValue] = useState({newName:'', newNumber:'', nameFilter:''})
 
 
   const addNew = (e) => {
@@ -38,11 +36,7 @@ const App = () => {
     } else {
       alert(`${newInputValue.newName} is already added to phonebook`)
     }
-    setNewInputValue({newName:'', newNumber:''})
-  }
-
-  const handleFilterChange = (e) => {
-    setNameFilter(e.target.value)
+    setNewInputValue({...newInputValue, newName:'', newNumber:''})
   }
 
   const handleOnChange = (e) => {
@@ -57,11 +51,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-        <Filter value={nameFilter} onChange={handleFilterChange} />
+        <Filter value={newInputValue} onChange={handleOnChange} />
       <h3>Add a new person</h3>
         <PersonForm onSubmit={addNew} value={newInputValue} onChange={handleOnChange} />
       <h3>Numbers</h3>
-        <Persons persons={persons} filterName={nameFilter} />
+        <Persons persons={persons} filterName={newInputValue.nameFilter} />
     </div>
   )
 }
@@ -73,6 +67,7 @@ const Person = ({ person }) => {
 }
 
 const Persons = ({ persons, filterName }) => {
+  console.log(persons, filterName)
   const filteredPersons = persons.filter(person => person.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1)
   const listPerson = () => filteredPersons.map(filteredPerson =>
     <Person
@@ -88,7 +83,7 @@ const Persons = ({ persons, filterName }) => {
 const Filter = ({ value, onChange }) => {
   return (
     <div>
-      filter shown with <input type="text" value={value} onChange={onChange} />
+      filter shown with <input type="text" name="nameFilter" value={value.nameFilter} onChange={onChange} />
     </div>
   )
 }
@@ -97,7 +92,7 @@ const PersonForm = ({onSubmit, value, onChange}) => {
   return (
     <form onSubmit={onSubmit}>
     <div>
-      name: <input type="text" name='newName' value={value.newName} onChange={onChange} />
+      name: <input type="text" name="newName" value={value.newName} onChange={onChange} />
     </div>
     <div>
       number: <input type="text" name="newNumber" value={value.newNumber} onChange={onChange} />
