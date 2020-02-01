@@ -1,0 +1,22 @@
+{
+    "notes" : [
+        {
+            "id":1,
+            "content": "HTML is hard",
+            "date": "2020-02-01T14:08:31.470Z",
+            "important": true
+        },
+        {
+            "id":2,
+            "content":"Browser can execute only Javascript",
+            "date": "2020-02-01T14:10:13.363Z",
+            "important": false
+        },
+        {
+            "id":3,
+            "content": "GET and POST are the most important method of HTTP protocal",
+            "date": "2020-02-01T14:10:57.462Z",
+            "important": true
+        }
+    ]
+}
